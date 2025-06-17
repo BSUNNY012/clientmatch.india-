@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ClientMatch India</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Font Awesome for Instagram Icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Twinkling & Falling Stars Background -->
+  <div class="starry-bg" id="starryBg"></div>
+
+  <header>
+    <h1>ClientMatch India</h1>
+    <p class="subtitle">Bridging Talents & Opportunities</p>
+    <input type="text" id="searchInput" placeholder="Search by name or skill..." />
+  </header>
+
+  <div class="container" id="cardContainer">
+    <div class="card">
+      <img src="images/designer1.jpg" alt="Designer Profile">
+      <h2>Riya Sharma</h2>
+      <h4>UI/UX Designer</h4>
+      <p><strong>Experience:</strong> 3 Years</p>
+      <p><strong>Skills:</strong> Figma, Adobe XD, Photoshop</p>
+      <p><strong>Fees:</strong> ₹499 per project</p>
+      <p><strong>Rating:</strong> ⭐ 4.7 / 5</p>
+      <a href="https://www.instagram.com/direct/t/17841454206140393/" target="_blank">
+        <button><i class="fab fa-instagram"></i> Contact</button>
+      </a>
+      <button onclick="downloadCV('cv_riya.pdf')">Download CV</button>
+    </div>
+
+    <div class="card">
+      <img src="images/editor1.jpg" alt="Editor Profile">
+      <h2>Aman Yadav</h2>
+      <h4>Video Editor</h4>
+      <p><strong>Experience:</strong> 2 Years</p>
+      <p><strong>Skills:</strong> Premiere Pro, After Effects</p>
+      <p><strong>Fees:</strong> ₹299 per video</p>
+      <p><strong>Rating:</strong> ⭐ 4.5 / 5</p>
+      <a href="https://www.instagram.com/direct/t/17841454206140393/" target="_blank">
+        <button><i class="fab fa-instagram"></i> Contact</button>
+      </a>
+      <button onclick="downloadCV('cv_aman.pdf')">Download CV</button>
+    </div>
+
+    <div class="card">
+      <img src="images/marketer1.jpg" alt="Marketer Profile">
+      <h2>Priya Mehta</h2>
+      <h4>Social Media Marketer</h4>
+      <p><strong>Experience:</strong> 4 Years</p>
+      <p><strong>Skills:</strong> Instagram Ads, SEO, Strategy</p>
+      <p><strong>Fees:</strong> ₹699 per campaign</p>
+      <p><strong>Rating:</strong> ⭐ 4.8 / 5</p>
+      <a href="https://www.instagram.com/direct/t/17841454206140393/" target="_blank">
+        <button><i class="fab fa-instagram"></i> Contact</button>
+      </a>
+      <button onclick="downloadCV('cv_priya.pdf')">Download CV</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 ClientMatch India | Made by officially ClientMatch.india</p>
+  </footer>
+
+  <!-- Twinkling & Falling Stars Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const starryBg = document.getElementById("starryBg");
+
+      for (let i = 0; i < 150; i++) {
+        const star = document.createElement("div");
+        star.classList.add("star");
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 100}%`;
+        star.style.animationDuration = `${Math.random() * 3 + 2}s`;
+        starryBg.appendChild(star);
+      }
+    });
+  </script>
+
+  <!-- Search & CV Download Script -->
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', () => {
+      const filter = searchInput.value.toLowerCase();
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        card.style.display = text.includes(filter) ? 'block' : 'none';
+      });
+    });
+
+    function downloadCV(filename) {
+      const link = document.createElement('a');
+      link.href = `cv/${filename}`;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+</body>
+</html>
