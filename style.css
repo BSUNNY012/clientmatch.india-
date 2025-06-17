@@ -166,7 +166,8 @@ h1 {
 .card h2 {
   font-size: 24px;
   margin: 10px 0 5px;
-  color: #fff;
+  color: #f7d700;
+  text-shadow: 0 0 8px #f7d700, 0 0 15px #f7d700;
 }
 
 .card h4 {
@@ -229,3 +230,4 @@ footer {
     width: 90%;
   }
 }
+
