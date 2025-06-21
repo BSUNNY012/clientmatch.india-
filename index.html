@@ -8,14 +8,13 @@
   <style>
     .card h2 {
       font-size: 28px;
-      color: #00ffff;
-      text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+      color: #f7d700;
+      text-shadow: 0 0 10px #f7d700, 0 0 20px #f7d700;
       margin-top: 10px;
     }
   </style>
 </head>
 <body>
-  <!-- Twinkling & Falling Stars Background -->
   <div class="starry-bg" id="starryBg"></div>
 
   <header>
@@ -24,56 +23,16 @@
     <input type="text" id="searchInput" placeholder="Search by name or skill..." />
   </header>
 
-  <div class="container" id="cardContainer">
-    <div class="card">
-      <h2>Riya Sharma</h2>
-      <h4>UI/UX Designer</h4>
-      <p><strong>Experience:</strong> 3 Years</p>
-      <p><strong>Skills:</strong> Figma, Adobe XD, Photoshop</p>
-      <p><strong>Fees:</strong> ₹499 per project</p>
-      <p><strong>Rating:</strong> ⭐ 4.7 / 5</p>
-      <a href="https://www.instagram.com/" target="_blank">
-        <button>Contact</button>
-      </a>
-      <button onclick="downloadCV('cv_riya.pdf')">Download CV</button>
-    </div>
-
-    <div class="card">
-      <h2>Aman Yadav</h2>
-      <h4>Video Editor</h4>
-      <p><strong>Experience:</strong> 2 Years</p>
-      <p><strong>Skills:</strong> Premiere Pro, After Effects</p>
-      <p><strong>Fees:</strong> ₹299 per video</p>
-      <p><strong>Rating:</strong> ⭐ 4.5 / 5</p>
-      <a href="https://www.instagram.com/" target="_blank">
-        <button>Contact</button>
-      </a>
-      <button onclick="downloadCV('cv_aman.pdf')">Download CV</button>
-    </div>
-
-    <div class="card">
-      <h2>Priya Mehta</h2>
-      <h4>Social Media Marketer</h4>
-      <p><strong>Experience:</strong> 4 Years</p>
-      <p><strong>Skills:</strong> Instagram Ads, SEO, Strategy</p>
-      <p><strong>Fees:</strong> ₹699 per campaign</p>
-      <p><strong>Rating:</strong> ⭐ 4.8 / 5</p>
-      <a href="https://www.instagram.com/" target="_blank">
-        <button>Contact</button>
-      </a>
-      <button onclick="downloadCV('cv_priya.pdf')">Download CV</button>
-    </div>
-  </div>
+  <div class="container" id="cardContainer"></div>
 
   <footer>
     <p>© 2025 ClientMatch India | Made by officially ClientMatch.india</p>
   </footer>
 
-  <!-- Twinkling & Falling Stars Script -->
+  <!-- Star background script -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const starryBg = document.getElementById("starryBg");
-
       for (let i = 0; i < 150; i++) {
         const star = document.createElement("div");
         star.classList.add("star");
@@ -85,8 +44,38 @@
     });
   </script>
 
-  <!-- Search & CV Download Script -->
+  <!-- Fetch client data from Google Sheets -->
   <script>
+    const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSNnxvgGwqKF8XTg1YDPh_J1FDaYUbGm_LCueUeHK_O4TIJGWgjJ49xdYicDljx08FKTu1I11MUmu0p/pub?output=csv';
+    
+    fetch(sheetURL)
+      .then(res => res.text())
+      .then(data => {
+        const rows = data.split('\n').slice(1); // skip header
+        const container = document.getElementById('cardContainer');
+
+        rows.forEach(row => {
+          const [name, role, description, skills, experience, fee, sample, contact] = row.split(',');
+
+          if (!name || !role) return;
+
+          const card = document.createElement('div');
+          card.className = 'card';
+
+          card.innerHTML = `
+            <h2>${name.trim()}</h2>
+            <h4>${role.trim()}</h4>
+            <a href="${contact.trim()}" target="_blank">
+              <button>Contact</button>
+            </a>
+            <button onclick="window.open('${sample.trim()}', '_blank')">View Work</button>
+          `;
+
+          container.appendChild(card);
+        });
+      });
+
+    // Search Function
     const searchInput = document.getElementById('searchInput');
     searchInput.addEventListener('input', () => {
       const filter = searchInput.value.toLowerCase();
@@ -96,16 +85,6 @@
         card.style.display = text.includes(filter) ? 'block' : 'none';
       });
     });
-
-    function downloadCV(filename) {
-      const link = document.createElement('a');
-      link.href = `cv/${filename}`;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
   </script>
 </body>
 </html>
-
