@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Full Profile</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .profile {
+      max-width: 600px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      border-radius: 15px;
+      text-align: center;
+      margin-top: 50px;
+    }
+    h2 {
+      color: #f7d700;
+      text-shadow: 0 0 10px #f7d700;
+    }
+    p {
+      color: #ccc;
+      line-height: 1.6;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #0ff;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="profile" id="profileContainer">Loading profile...</div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const targetName = urlParams.get('name');
+
+    fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vSNnxvgGwqKF8XTg1YDPh_J1FDaYUbGm_LCueUeHK_O4TIJGWgjJ49xdYicDljx08FKTu1I11MUmu0p/pub?output=csv')
+      .then(res => res.text())
+      .then(data => {
+        const rows = data.split('\n').slice(1);
+        const profileDiv = document.getElementById('profileContainer');
+
+        let found = false;
+
+        rows.forEach(row => {
+          const [name, role, description, skills, experience, fee, sample, contact] = row.split(',');
+
+          if (name.trim() === targetName) {
+            found = true;
+            profileDiv.innerHTML = `
+              <h2>${name.trim()}</h2>
+              <h4>${role.trim()}</h4>
+              <p><strong>Description:</strong> ${description.trim()}</p>
+              <p><strong>Skills:</strong> ${skills.trim()}</p>
+              <p><strong>Experience:</strong> ${experience.trim()}</p>
+              <p><strong>Fees:</strong> ${fee.trim()}</p>
+              <a href="${contact.trim()}" target="_blank"><button>Contact</button></a>
+              <a href="${sample.trim()}" target="_blank"><button>View Work</button></a>
+            `;
+          }
+        });
+
+        if (!found) {
+          profileDiv.innerHTML = "<p>Profile not found.</p>";
+        }
+      });
+  </script>
+</body>
+</html>
