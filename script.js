@@ -1,47 +1,40 @@
-// Get the container
-const starryBg = document.getElementById('starryBg');
+const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSNnxvgGwqKF8XTg1YDPh_J1FDaYUbGm_LCueUeHK_O4TIJGWgjJ49xdYicDljx08FKTu1I11MUmu0p/pub?output=csv';
 
-// Create twinkling stars
-function createStars(count = 100) {
-  for (let i = 0; i < count; i++) {
-    const star = document.createElement('div');
-    star.classList.add('star');
-    star.style.top = `${Math.random() * 100}%`;
-    star.style.left = `${Math.random() * 100}%`;
-    star.style.animationDuration = `${1 + Math.random() * 3}s`;
-    star.style.animationDelay = `${Math.random() * 5}s`;
-    starryBg.appendChild(star);
-  }
-}
+fetch(sheetURL)
+  .then(res => res.text())
+  .then(data => {
+    const rows = data.split('\n').slice(1);
+    const container = document.getElementById('cardContainer');
 
-// Create shooting stars
-function createShootingStars(count = 3) {
-  for (let i = 0; i < count; i++) {
-    const shootingStar = document.createElement('div');
-    shootingStar.classList.add('shooting-star');
-    resetShootingStar(shootingStar);
-    starryBg.appendChild(shootingStar);
-    animateShootingStar(shootingStar);
-  }
-}
+    rows.forEach(row => {
+      const [name, role, description, skills, experience, fee, sample, contact] = row.split(',');
 
-// Reset position of shooting star
-function resetShootingStar(star) {
-  star.style.top = `${Math.random() * 50}%`;
-  star.style.left = `-${Math.random() * 200 + 50}px`;
-}
+      if (!name || !role) return;
 
-// Animate shooting stars periodically
-function animateShootingStar(star) {
-  setInterval(() => {
-    resetShootingStar(star);
-    star.style.animation = 'none';
-    // Trigger reflow to restart animation
-    void star.offsetWidth;
-    star.style.animation = 'shoot 5s ease-in-out';
-  }, 5000 + Math.random() * 5000); // Random interval between 5–10 sec
-}
+      const card = document.createElement('div');
+      card.className = 'card';
 
-// Initialize
-createStars(150);
-createShootingStars(5);
+      card.innerHTML = `
+        <h2>${name.trim()}</h2>
+        <h4>${role.trim()}</h4>
+        <a href="${contact.trim()}" target="_blank">
+          <button>Contact</button>
+        </a>
+        <button onclick="window.location.href='profile.html?name=${encodeURIComponent(name.trim())}'">View Full Profile</button>
+      `;
+
+      container.appendChild(card);
+    });
+  });
+
+// Search Function
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', () => {
+  const filter = searchInput.value.toLowerCase();
+  const cards = document.querySelectorAll('.card');
+  cards.forEach(card => {
+    const text = card.innerText.toLowerCase();
+    card.style.display = text.includes(filter) ? 'block' : 'none';
+  });
+});
+
