@@ -29,62 +29,7 @@
     <p>© 2025 ClientMatch India | Made by officially ClientMatch.india</p>
   </footer>
 
-  <!-- Star background script -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const starryBg = document.getElementById("starryBg");
-      for (let i = 0; i < 150; i++) {
-        const star = document.createElement("div");
-        star.classList.add("star");
-        star.style.left = `${Math.random() * 100}%`;
-        star.style.top = `${Math.random() * 100}%`;
-        star.style.animationDuration = `${Math.random() * 3 + 2}s`;
-        starryBg.appendChild(star);
-      }
-    });
-  </script>
-
-  <!-- Fetch client data from Google Sheets -->
-  <script>
-    const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSNnxvgGwqKF8XTg1YDPh_J1FDaYUbGm_LCueUeHK_O4TIJGWgjJ49xdYicDljx08FKTu1I11MUmu0p/pub?output=csv';
-    
-    fetch(sheetURL)
-      .then(res => res.text())
-      .then(data => {
-        const rows = data.split('\n').slice(1); // skip header
-        const container = document.getElementById('cardContainer');
-
-        rows.forEach(row => {
-          const [name, role, description, skills, experience, fee, sample, contact] = row.split(',');
-
-          if (!name || !role) return;
-
-          const card = document.createElement('div');
-          card.className = 'card';
-
-          card.innerHTML = `
-            <h2>${name.trim()}</h2>
-            <h4>${role.trim()}</h4>
-            <a href="${contact.trim()}" target="_blank">
-              <button>Contact</button>
-            </a>
-            <button onclick="window.open('${sample.trim()}', '_blank')">View Work</button>
-          `;
-
-          container.appendChild(card);
-        });
-      });
-
-    // Search Function
-    const searchInput = document.getElementById('searchInput');
-    searchInput.addEventListener('input', () => {
-      const filter = searchInput.value.toLowerCase();
-      const cards = document.querySelectorAll('.card');
-      cards.forEach(card => {
-        const text = card.innerText.toLowerCase();
-        card.style.display = text.includes(filter) ? 'block' : 'none';
-      });
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
+
