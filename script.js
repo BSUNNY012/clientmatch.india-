@@ -7,7 +7,7 @@ fetch(sheetURL)
     const container = document.getElementById('cardContainer');
 
     rows.forEach(row => {
-      const [name, role, description, skills, experience, fees, upload showcase/cv , instagram] = row.split(',');
+      const [name, role, description, skills, experience, fees, upload showcase/cv , instagram link] = row.split(',');
 
       if (!name || !role) return;
 
