@@ -7,7 +7,7 @@ fetch(sheetURL)
     const container = document.getElementById('cardContainer');
 
     rows.forEach(row => {
-      const [name, role, description, skills, experience, fee, sample, contact] = row.split(',');
+      const [name, role, description, skills, experience, fees, upload showcase/cv , instagram] = row.split(',');
 
       if (!name || !role) return;
 
@@ -17,10 +17,18 @@ fetch(sheetURL)
       card.innerHTML = `
         <h2>${name.trim()}</h2>
         <h4>${role.trim()}</h4>
+
         <a href="${contact.trim()}" target="_blank">
           <button>Contact</button>
         </a>
-        <button onclick="window.location.href='profile.html?name=${encodeURIComponent(name.trim())}'">View Full Profile</button>
+
+        <a href="${instagram.trim()}" target="_blank">
+          <button>Instagram</button>
+        </a>
+
+        <button onclick="window.location.href='profile.html?name=${encodeURIComponent(name.trim())}'">
+          View Full Profile
+        </button>
       `;
 
       container.appendChild(card);
@@ -37,4 +45,5 @@ searchInput.addEventListener('input', () => {
     card.style.display = text.includes(filter) ? 'block' : 'none';
   });
 });
+
 
