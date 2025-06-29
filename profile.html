@@ -24,7 +24,7 @@
       line-height: 1.6;
     }
     button {
-      margin-top: 15px;
+      margin: 10px 5px;
       padding: 10px 20px;
       background: #0ff;
       border: none;
@@ -50,7 +50,7 @@
         let found = false;
 
         rows.forEach(row => {
-          const [name, role, description, skills, experience, fee, sample, contact] = row.split(',');
+          const [name, role, description, skills, experience, fee, upload showcase/cv , instagram] = row.split(',');
 
           if (name.trim() === targetName) {
             found = true;
@@ -63,6 +63,7 @@
               <p><strong>Fees:</strong> ${fee.trim()}</p>
               <a href="${contact.trim()}" target="_blank"><button>Contact</button></a>
               <a href="${sample.trim()}" target="_blank"><button>View Work</button></a>
+              <a href="${instagram.trim()}" target="_blank"><button>Instagram</button></a>
             `;
           }
         });
@@ -74,3 +75,4 @@
   </script>
 </body>
 </html>
+
