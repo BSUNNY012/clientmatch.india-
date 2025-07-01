@@ -50,7 +50,7 @@
         let found = false;
 
         rows.forEach(row => {
-          const [full name, what do you do? , description about yourself , skills, experience, fees, upload showcase/cv , instagram link] = row.split(',');
+          const [name, role, description, skills, experience, fees, sample, contact] = row.split(',');
 
           if (name.trim() === targetName) {
             found = true;
@@ -60,10 +60,9 @@
               <p><strong>Description:</strong> ${description.trim()}</p>
               <p><strong>Skills:</strong> ${skills.trim()}</p>
               <p><strong>Experience:</strong> ${experience.trim()}</p>
-              <p><strong>Fees:</strong> ${fee.trim()}</p>
+              <p><strong>Fees:</strong> ${fees.trim()}</p>
               <a href="${contact.trim()}" target="_blank"><button>Contact</button></a>
               <a href="${sample.trim()}" target="_blank"><button>View Work</button></a>
-              <a href="${instagram.trim()}" target="_blank"><button>Instagram</button></a>
             `;
           }
         });
@@ -75,4 +74,5 @@
   </script>
 </body>
 </html>
+
 
